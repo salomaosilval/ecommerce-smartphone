@@ -1,7 +1,9 @@
+import { Content } from "./components/Content/Content";
+
 function App() {
   return (
     <div className="App">
-      <h1>E commerce Smartphone</h1>
+      <Content />
     </div>
   );
 }
