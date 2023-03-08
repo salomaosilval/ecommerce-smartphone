@@ -1,7 +1,18 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import axios from "axios";
+
 import { BsCartPlus, BsCartCheck } from "react-icons/bs";
+
 import { setItem, getItem } from "../../services/LocalStorageFuncs";
+
+import { formatCurrency } from "../../utils/FormatCurrency";
+import { priceOnCard } from "../../utils/PriceOnCard";
+
+import { ProductsArea, GreenBsCartCheck, RedBsCartPlus } from "./styles";
+
+import { Header } from "../../components/Header/Header";
 
 export const Store = () => {
   const [data, setData] = useState([]);
@@ -35,19 +46,20 @@ export const Store = () => {
 
   return (
     <div>
-      <h1>Store</h1>
-      <div>
+      <Header />
+      <ProductsArea>
         {data.map((smartphone) => (
           <div key={smartphone.id}>
             <h4>{smartphone.title}</h4>
             <img src={smartphone.thumbnail} alt={smartphone.title} />
-            <h4>{smartphone.price}</h4>
+            <h3>{formatCurrency(smartphone.price)}</h3>
+            <p>ou 12x de {formatCurrency(priceOnCard(smartphone.price))}</p>
             <button onClick={() => handleClick(smartphone)}>
-              {cart.some((item) => item.id === smartphone.id) ? <BsCartCheck /> : <BsCartPlus />}
+              {cart.some((item) => item.id === smartphone.id) ? <GreenBsCartCheck /> : <RedBsCartPlus />}
             </button>
           </div>
         ))}
-      </div>
+      </ProductsArea>
     </div>
   );
 };
